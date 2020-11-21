@@ -1,9 +1,16 @@
 # Open source support
 
+* [Versioning](#versioning)
+* [Release process](#release-process)
+* [CI tests](#ci-tests)
+* [Node versions](#node-versions)
+* [Security](#security)
+* [Support for old versions](#support-for-old-versions)
+
 
 ## Versioning
 
-Our open source projects are versioned with [semver](semver.md). You should read through the [semver documentation](http://semver.org) if you're going to release new versions.
+Our open source projects are versioned with [SemVer](../git/semver.md). You should read through the [SemVer documentation](http://semver.org) if you're going to release new versions.
 
 
 ## Release process
@@ -11,7 +18,7 @@ Our open source projects are versioned with [semver](semver.md). You should read
 To publish a new version of one of our open source projects:
 
 * Switch to the `master` branch. Version commits are the only ones that shouldn't be committed to a feature branch.
-* Increment either the major, minor, or patch version in the `package.json` file. If you're unsure which, check with the rest of the team or re-read the semver docs. Also verify if there are any mentions to the old version in the `README.md` or any other files, and update them too.
+* Increment either the major, minor, or patch version in the `package.json` file. If you're unsure which, check with the rest of the team or re-read the SemVer docs. Also verify if there are any mentions to the old version in the `README.md` or any other files, and update them too.
 * Add an entry to the `HISTORY.md` file outlining the changes in the new version. Take your time, this log should be useful to developers who use this project - it should help them make decisions about whether they can or should upgrade. If there are additional commits on the `master` branch since the last version, be sure to include a description of what they do in your history update - talk to the developers who committed them, if necessary.
 * Commit your changes with a message formatted as `Version 1.2.3` - this helps people find version commits in the log.
 * Tag your newly created commit with the version number. E.g. `git tag 1.2.3`. Do *not* prepend a `v` or `Version`, for example do not use either `git tag v1.2.3` nor `git tag "Version 1.2.3"`.
@@ -21,7 +28,7 @@ To publish a new version of one of our open source projects:
 
 ## CI tests
 
-We aim for every project to run its unit tests automatically every time a change is commited to its repo.
+We aim for every project to run its unit tests automatically every time a change is committed to its repo.
 
 At the moment we use [Travis CI](https://travis-ci.org/springernature/) for our projects but other options are available.
 
@@ -42,7 +49,7 @@ Dropping support for a node version from the test matrix must be only done as pa
 Whenever possible, we'll use automated tools and alerts in order to check for vulnerabilities in our projects or their dependencies.
 
 
-## Suport for old versions
+## Support for old versions
 
 We aim to support old versions for 6 months after the next major version has been released. Support for old versions will be usually limited to security issues or important bugfixes.
 
