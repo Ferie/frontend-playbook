@@ -46,25 +46,11 @@ Not all users are able to easily navigate by landmarks. Multiple navigation link
 
 To help them out you can add a "Skip Navigation" link to the top of each page which, when activated, will take them to the main section of the page.
 
-We do this:
-
-```
-<body>
-<p><a href="#maincontent">Skip to main content</a></p>
-...
-<main id="maincontent" tabindex="-1">
-<h1>Heading</h1>
-<p>This is the first paragraph</p>
-```
-
-We add `tabindex="-1"` to the targeted element so that it can be programmatically focussed when skipped to.
-
-You should supply CSS that hides the Skip Navigation _for sighted users only_, and makes the link highly visible when it receives focus via tabbing.
+The Elements Design System includes [https://elements.springernature.com/springernature/components/global-skip-link](a skip link implementation) that you can use in your own project(s). 
 
 Resources:
 
 * [Article: WebAIM's overview of Skip Navigation techniques](https://webaim.org/techniques/skipnav/)
-* [Example: Springer Link's well-done skip navigation](https://link.springer.com)
 
 
 ### Declare a language attribute
@@ -103,7 +89,7 @@ Resources:
 
 ### Use headings correctly
 
-The [HTML5 outline algorithm](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML_sections_and_outlines) can't yet be relied on to convey information to users. Freely use HTML5 sectioning elements, but use headings to define the structure of your document. In basic terms this means one H1 per page! See our [HTML markup house style](https://github.com/springernature/frontend-playbook/blob/master/markup/house-style.md#follow-the-html-4-outline-model-for-heading-levels) for more information on the outline algorithm and why we don't use multiple level one headings.
+The [HTML5 outline algorithm](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML_sections_and_outlines) can't yet be relied on to convey information to users. Freely use HTML5 sectioning elements, but use headings to define the structure of your document. In basic terms this means one H1 per page! See our [HTML markup house style](https://github.com/springernature/frontend-playbook/blob/main/markup/house-style.md#follow-the-html-4-outline-model-for-heading-levels) for more information on the outline algorithm and why we don't use multiple level one headings.
 
 Use an appropriate heading for each section. You can visually hide headings, but make sure they're still accessible to screen reader users.
 
@@ -128,7 +114,7 @@ Resources:
 
 ### Audio or video elements must be accessible
 
-This could involve adding [captions to videos](https://www.youtube.com/watch?v=5AXApBbj1ps), providing [transcripts of audio content](https://www.nature.com/nature/podcast/v546/n7658/nature-2017-06-15.html), including audio description on videos, or including a text alternative for videos that have no audio track.
+This could involve adding [captions to videos](https://www.youtube.com/watch?v=5AXApBbj1ps), providing [transcripts of audio content](https://www.nature.com/articles/d41586-021-01491-0), including audio description on videos, or including a text alternative for videos that have no audio track.
 
 Automatic captions (e.g. those provided by YouTube) are insufficient for accessibility compliance.
 
@@ -167,11 +153,12 @@ Resources:
 
 ### Don't convey information with colour alone
 
-Use text equivalents or semantic emphasis like `<strong>` or `<em>` when conveying important information to users.
+Use text equivalents or semantic emphasis like `<strong>` or `<em>` when conveying important information to users. No hyperlinks may be indicated by text color alone. Except in special cases, such as options in navigation menus, use an underline.
 
 Resources:
 
 * [Article: Don’t use color alone to convey meaning](http://universalusability.com/access_by_design/color/alone.html)
+* [Why you should (almost) always underline your links](https://www.tempertemper.net/blog/why-you-should-almost-always-underline-your-links)
 
 
 ## Interactivity
@@ -223,24 +210,27 @@ If you must do it, warn the user _before_ they click on the link that it'll open
 
 Resources:
 
-* [Article: Opening links in a new window](https://www.nomensa.com/blog/2011/opening-links-new-window)
+* [Article: Link Targets and 3.2.5](https://adrianroselli.com/2020/02/link-targets-and-3-2-5.html)
+* [Article: How to Stop Opening Links in New Windows without Warning](https://knowbility.org/blog/2019/links-opening-new-windows-no-warning)
+* [Article: Should links open in new windows?](https://www.smashingmagazine.com/2008/07/should-links-open-in-new-windows/)
 
 
 ## Forms
 
 ### Labels and context
 
-* Associate all form controls with appropriate labels. 
+* Associate all form controls with appropriate labels.
 * Use fieldsets or optgroups to group related controls.
 
 ### Don't use HTML5 input placeholders for important information
 
 Input placeholders disappear when the user begins typing, may be mistaken for a value, and may not provide adequate context.
 
-Never put user instructions in input placeholders - always use a label.
+Never put user instructions in input placeholders - always use a label. The HTML5 specification clarifies that a placeholder should not be used as an alternative to a label.
 
 Resources:
 
+* [HTML5 Living Specification: the placeholder attribute](https://html.spec.whatwg.org/dev/input.html#the-placeholder-attribute)
 * [Article: HTML5 Accessibility Chops: the placeholder attribute](https://developer.paciellogroup.com/blog/2011/02/html5-accessibility-chops-the-placeholder-attribute/)
 * [Article: 11 reasons why placeholders are problematic](https://medium.com/simple-human/10-reasons-why-placeholders-are-problematic-f8079412b960)
 * [Article: Don’t Use The Placeholder Attribute](https://www.smashingmagazine.com/2018/06/placeholder-attribute)
@@ -249,15 +239,15 @@ Resources:
 
 By default, browsers remember information that users submit into input fields. The browser can then suggest possible completions for fields that the user has started typing in (autocomplete) or pre-populate certain fields when the page loads (autofill). This behaviour can be turned off in HTML with the `autocomplete="false"` attribute.
 
-Don't indiscriminately disable autocomplete for input fields. The default autocomplete and autofill behaviours are useful for many users with and without disabilities. 
+Don't indiscriminately disable autocomplete for input fields. The default autocomplete and autofill behaviours are useful for many users with and without disabilities.
 
-For example, autocomplete helps users with motor disabilities by reducing the amount of typing they need to do in input fields. Autofill can help users with cognitive disabilities by automatically filling in common information like addresses or telephone numbers. 
+For example, autocomplete helps users with motor disabilities by reducing the amount of typing they need to do in input fields. Autofill can help users with cognitive disabilities by automatically filling in common information like addresses or telephone numbers.
 
-Don't disable autocomplete on sensitive fields like username and password fields. Any security benefits of doing this is negligible compared to the benefits of users' in-browser password managers, and has a direct negative impact on accessibility. Read the note on autofill in the [secure markup guide](https://github.com/springernature/frontend-playbook/blob/master/security/secure-markup.md#a-note-on-autofill) for more on that. 
+Don't disable autocomplete on sensitive fields like username and password fields. Any security benefits of doing this is negligible compared to the benefits of users' in-browser password managers, and has a direct negative impact on accessibility. Read the note on autofill in the [secure markup guide](https://github.com/springernature/frontend-playbook/blob/main/security/secure-markup.md#a-note-on-autofill) for more on that.
 
-For fields where the user is expected to input information _about themselves_, use a valid autocomplete value if one exists - this helps make form filling software more effective. The HTML specification provides a [list of valid autocomplete values](https://www.w3.org/TR/html53/sec-forms.html#sec-autofill). 
+For fields where the user is expected to input information _about themselves_, use a valid autocomplete value if one exists - this helps make form filling software more effective. The HTML specification provides a [list of valid autocomplete values](https://www.w3.org/TR/html53/sec-forms.html#sec-autofill).
 
-Don't use autocomplete values on input fields where the user is expected to input one-time information about _somebody else_ (e.g. a teacher filling out a form with the details of a list their students). 
+Don't use autocomplete values on input fields where the user is expected to input one-time information about _somebody else_ (e.g. a teacher filling out a form with the details of a list their students).
 
 Resources:
 
@@ -273,7 +263,7 @@ Screen reader users may navigate a page by links alone. Avoid link text that say
 
 Resources:
 
-* [Article: Writing good link text](https://www.nomensa.com/blog/2011/writing-good-link-text)
+* [Article: Writing good link text](https://www.nomensa.com/blog/how-write-good-link-text)
 
 
 ### Use tables appropriately

@@ -2,47 +2,51 @@
 
 This document outlines the way we write JavaScript. It's a living style guide – it will grow as our practices do.
 
-- [General principles](#general-principles)
-  - [Progressively enhance](#progressively-enhance)
-  - [Code for humans](#code-for-humans)
-  - [Modules over monoliths](#modules-over-monoliths)
-  - [Keep it simple](#keep-it-simple)
-  - [Performant code](#performant-code)
-- [Code style](#code-style)
-  - [Linting](#linting)
-  - [Comments](#comments)
-  - [Asynchronicity](#asynchronicity)
-    - [Things to consider](#things-to-consider)
-    - [Tips](#tips)
-      - [Awaiting multiple promises](#awaiting-multiple-promises)
-      - [Multiple awaits in a one-liner](#multiple-awaits-in-a-one-liner)
-      - [Arrow function syntax with await](#arrow-function-syntax-with-await)
-      - [Fallback to promises](#fallback-to-promises)
-    - [Further reading](#further-reading)
-  - [Indentation](#indentation)
-  - [White space](#white-space)
-  - [Variables](#variables)
-  - [Functions](#functions)
-    - [Pure functions](#pure-functions)
-  - [Operators](#operators)
-  - [Loops](#loops)
-  - [Strict mode](#strict-mode)
-- [Client-side JavaScript architecture](#client-side-javascript-architecture)
-  - [Module architecture](#module-architecture)
-    - [Configuration](#configuration)
-    - [Imports](#imports)
-  - [Events](#events)
-    - [Events for related modules](#events-for-related-modules)
-    - [Events for unrelated modules](#events-for-unrelated-modules)
-  - [DOM binding](#dom-binding)
-    - [Test hook attributes](#test-hook-attributes)
-    - [Complex 2-way binding](#complex-2-way-binding)
-    - [Client-side templating](#client-side-templating)
-    - [Polyfills](#polyfills)
-  - [Directory structure](#directory-structure)
-    - [Components directory](#components-directory)
-    - [Vendor directory](#vendor-directory)
-    - [Utils directory](#utils-directory)
+* [General principles](#general-principles)
+  * [Progressively enhance](#progressively-enhance)
+  * [Code for humans](#code-for-humans)
+  * [Modules over monoliths](#modules-over-monoliths)
+  * [Keep it simple](#keep-it-simple)
+  * [Performant code](#performant-code)
+* [Code style](#code-style)
+  * [Linting](#linting)
+  * [Comments](#comments)
+  * [Asynchronicity](#asynchronicity)
+    * [Things to consider](#things-to-consider)
+    * [Tips](#tips)
+      * [Awaiting multiple promises](#awaiting-multiple-promises)
+      * [Multiple awaits in a one-liner](#multiple-awaits-in-a-one-liner)
+      * [Arrow function syntax with await](#arrow-function-syntax-with-await)
+      * [Fallback to promises](#fallback-to-promises)
+    * [Further reading](#further-reading)
+  * [Indentation](#indentation)
+  * [White space](#white-space)
+  * [Variables](#variables)
+    * [Defining variables](#defining-variables)
+    * [Use of var](#use-of-var)
+  * [Functions](#functions)
+    * [Pure functions](#pure-functions)
+  * [Operators](#operators)
+  * [Loops](#loops)
+  * [Strict mode](#strict-mode)
+* [Client-side JavaScript architecture](#client-side-javascript-architecture)
+  * [Module architecture](#module-architecture)
+    * [Configuration](#configuration)
+    * [Imports](#imports)
+  * [Events](#events)
+    * [Events for related modules](#events-for-related-modules)
+    * [Events for unrelated modules](#events-for-unrelated-modules)
+  * [DOM binding](#dom-binding)
+    * [Test hook attributes](#test-hook-attributes)
+    * [Complex 2-way binding](#complex-2-way-binding)
+    * [Client-side templating](#client-side-templating)
+    * [Polyfills](#polyfills)
+  * [Directory structure](#directory-structure)
+    * [Components directory](#components-directory)
+    * [Vendor directory](#vendor-directory)
+    * [Utils directory](#utils-directory)
+  * [Be careful when transpiling](#be-careful-when-transpiling)
+    * [`for...of loops`, a common use case](#forof-loops-a-common-use-case)
 
 ## General principles
 
@@ -142,7 +146,7 @@ Static analysis tools like linters can flag programming errors, bugs and stylist
 
 JavaScript code should be linted with [eslint](https://eslint.org/) using the [Springer Nature `eslint-config`](https://github.com/springernature/eslint-config-springernature). This configuration allows us to maintain consistency between different projects.
 
-You can check the [README](https://github.com/springernature/eslint-config-springernature/blob/master/README.md) for details about installing and configuring the tools.
+You can check the [README](https://github.com/springernature/eslint-config-springernature/blob/main/README.md) for details about installing and configuring the tools.
 
 ### Comments
 
@@ -189,6 +193,46 @@ We don't do this:
 
 // Sets can filter out non-unique values for us
 const uniqueIDs = new Set([1, 2, 1, 2]);
+```
+
+#### JSDoc
+
+Although your JavaScript code should be self-documenting, we highly recommend
+that where necessary, you document your JavaScript application or library using the
+standardised [JSDoc](https://jsdoc.app/) format.
+
+This format is leveraged by the Language Server Protocol (LSP), which is
+supported in numerous editors and Integrated Development Environments (IDE)
+nowadays.  
+Thanks to LSP you get short lines of documentation right from the
+invocation context. This helps you code quickly, while avoiding obvious errors.
+
+For a function, for example, you get:
+- What it is intended to do
+- The type, default value, and description of its parameters
+- Which parameters are optional
+- The function returned value type and description
+
+Bonus: There are tools to generate a documentation website for your application
+or library if it uses JSDoc.
+
+A concrete and furnished example:
+
+```js
+/**
+ * Get a list of book ids from a given library.
+ *
+ * @param {number} library - Id of the library.
+ * @param {number} [limit=10] - Optional maximum of books expected to be returned, defaults to 10.
+ * @param {object} [filters={}] - Optional filters, defaults to no filters.
+ * @param {string} [filters.subject] - A string to match up the subject of the book.
+ * @param {number} [filters.publicationyear] - Year the book was published.
+ *
+ * @returns {number[]} List of book ids matching the optionally given filters.
+ */
+function getListOfBookIdsFromLibrary(library, limit = 10, filters = {}) {
+    // ...
+}
 ```
 
 ### Asynchronicity
@@ -330,7 +374,7 @@ if (foo) {
 }
 ```
 
-We use automated tools (like Snyk) to monitor the status of dependencies in our package.json files. The majority of these tools expect two spaces for indentation, not tabs. Follow this convention in your package.json files to avoid irritating merges when one of the tools raises an automatic Pull Request. 
+Some tools (like NPM or Snyk) have the ability to rewrite all or part of the `package.json` file. The majority of these tools expect the `package.json` file to be indented with two spaces. Please follow this convention in your `package.json` files to avoid irritating merges when the output of such a tool is part of a Pull Request.
 
 ### White space
 
@@ -375,8 +419,8 @@ We do this:
 ```js
 let foo = 1;
 
-if (foo) {	
-    foo += 1;	
+if (foo) {
+    foo += 1;
 }
 ```
 
@@ -400,7 +444,7 @@ if (bar) {
 
 #### Use of var
 
-If you have to use `var` instead of `const` and `let` (because your environment doesn't support ES2015 (Node.js 4.x/[Babel](https://babeljs.io/))), you need to understand [hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting). 
+If you have to use `var` instead of `const` and `let` (because your environment doesn't support ES2015 (Node.js 4.x/[Babel](https://babeljs.io/))), you need to understand [hoisting](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting).
 Avoid defining variables inside loops or blocks.
 
 We do this:
@@ -451,7 +495,7 @@ const loadconfig = function(filePaths, callback) {
     // ...
 }
 
-function loadconfig(filePaths, callback) { 
+function loadconfig(filePaths, callback) {
     // ...
 }
 ```
@@ -555,7 +599,7 @@ The JavaScript in your application should consist of one or more entry points an
 - A module which implements sticky header functionality.
 
 Your module should use named exports for all exports.
- 
+
 We do this:
 
 ```js
@@ -692,7 +736,7 @@ export {init};
 
 #### Events for unrelated modules
 
-Use the [`createEvent` module](https://github.com/springernature/frontend-toolkits/tree/master/toolkits/global/packages/global-javascript#createevent) from the Springer Nature Elements toolkit. This module functions as a namespaced wrapper around Javascript `customEvent`.
+Use the [`createEvent` module](https://github.com/springernature/frontend-toolkits/tree/master/context/brand-context/default/js#createevent) from the Springer Nature Elements toolkit. This module functions as a namespaced wrapper around Javascript `customEvent`.
 
 One limitation of using the existing infrastructure that Javascript provides — the ability to create an `Event` and consume using `addEventListener` — instead of a [PubSub](https://addyosmani.com/blog/understanding-the-publishsubscribe-pattern-for-greater-javascript-scalability/) style implementation, is that you have to hang the event handler off a `DOM Element` or the `window`.
 
@@ -871,3 +915,47 @@ The `utils` directory is used to house JavaScript written for the project that d
   - It can expose functions and/or prototypal classes
 
 An example utility might be a function to make a string title-case.
+
+### Be careful when transpiling
+
+As enticing as it can be to use modern Javascript syntax, it remains the
+developers responsibility to ensure the developer experience does not negatively
+impact the user experience, e.g. by decreasing performance.
+Transpiling can easily increase the JavaScript bundle size, by incorporating
+polyfills to for supported browsers.
+
+There are two ways of avoiding an increase in bundle size:
+1. Monitoring, with tools like [BabelREPL](https://babeljs.io/repl/), which show
+   the size of your transpiled code.
+2. Using "older" JavaScript syntax to achieve the same effect. An example of
+   this is given below.
+
+#### `for...of loops`, a common use case
+
+We _don't_ do this:
+
+```js
+const list = document.querySelectorAll('input[type=checkbox]');
+for (let checkbox of list) {
+    // ..
+}
+```
+
+We do this:
+
+```js
+const list = document.querySelectorAll('input[type=checkbox]');
+Array.prototype.forEach.call(list, function (checkbox) {
+    // ...
+});
+```
+
+If you would run the above "We don't do this" snippet in [Babel REPL](https://babeljs.io/repl/),
+using our [browserslist](https://github.com/springernature/frontend-playbook/blob/main/practices/graded-browser-support.md#browerslist),
+it transpiles down to 23 lines, whereas the "We do this" snippet
+transpiles down to 5 lines.  If you multiply this by the amount of
+occurences of `for...of` in your code base, this can quickly get out of control.
+
+Further reading:
+- [Transpiled for-of Loops are Bad for the Client, by Dave Ruppert](https://daverupert.com/2017/10/for-of-loops-are-bad/).
+- [Avoiding Babel’s Production Bloat](https://webreflection.medium.com/avoiding-babels-production-bloat-d53eea2e1cbf)

@@ -1,13 +1,13 @@
 # Code reviews
 
-* [Why](#why)
+* [Why do them?](#why-do-them)
 * [What to look out for](#what-to-look-out-for)
 
 Code Review, or Peer Code Review, is the act of having your code checked by others for mistakes, errors, and omissions (e.g. missing tests). Like pair-programming (which we also support), it accelerates and streamlines software development.
 
 While we can support "traditional" Code Reviews, [we routinely review via **pull requests**](../git/git.md#pull-requests). These are communicated in the `#frontend-pr` Slack channel, and managed via GitHub. Discussion should happen in the GitHub comments, not Slack.
 
-Requesters merge their own changes when they're ready. Keep your fingers off that tempting green merge button. 
+Requesters merge their own changes when they're ready. Keep your fingers off that tempting green merge button.
 
 
 ## Why do them?
@@ -34,7 +34,7 @@ Requesters merge their own changes when they're ready. Keep your fingers off tha
 * **Accessibility**
 
   * [Accessibility](../accessibility/accessibility-checklist.md) problems. Suggest testing with [pa11y](https://github.com/pa11y) and/or other tools.
-    * [internal-only pa11y dashboard](http://pa11y.springernature.com/)
+    * [pa11y dashboard](http://pa11y.springernature.com/) _(link only works if inside the Springer Nature VPN)_
 
 * **Complexity**
 
@@ -54,7 +54,7 @@ Requesters merge their own changes when they're ready. Keep your fingers off tha
 
 * **Security**
 
-  * Code that introduces potential vulnerabilities. Suggest testing with [Snyk](https://snyk.io) and/or other tools.
+  * Code that adds dependencies that contain known vulnerabilities. Suggest testing with tools like [npm audit](https://docs.npmjs.com/cli/v8/commands/npm-audit), [Snyk](https://snyk.io) (for open source repos) and/or [White Source](https://www.whitesourcesoftware.com/) (for private repos).
 
 * **Syntax**
-  * Syntactic inconsistencies the [linter](https://github.com/springernature/frontend-playbook/blob/master/practices/house-style.md#linting) did not catch.
+  * Syntactic inconsistencies the [linter](https://github.com/springernature/frontend-playbook/blob/main/practices/house-style.md#linting) did not catch.

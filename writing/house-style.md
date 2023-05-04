@@ -22,12 +22,14 @@ Always use [inclusive language](inclusive-language.md).
 
 ### Plain English
 
-Follow Plain English guidelines to help safeguard the accessibility of your written content. All relevant guidelines for [writing well][writing-well] apply. You might find tools like [Hemingway App](http://www.hemingwayapp.com/) helpful when editing. In particular:
+Follow [Plain English guidelines](http://www.plainenglish.co.uk/how-to-write-in-plain-english.html) to help safeguard the accessibility of your written content. You might find tools like [Hemingway App](http://www.hemingwayapp.com/) helpful when editing. In particular:
 
 * Be concise
   * Check any sentences with more than 25 words to see if you can split them to make them clearer.
+  * Ideally no more than 1-2 points per sentence.
   * Use contractions (e.g. "can't", "it's").
   * Go straight to the point.
+  * Avoid unnecessary words (e.g. There is, It is, very, really, pretty, just, actually). 
 * Be specific
   - Prefer the active voice to the passive voice<sup>[\[1\]][active-passive]</sup> (e.g. "NPM will install the dependencies" instead of "the dependencies will be installed").
   * Address the reader as "you" where possible.
@@ -50,5 +52,4 @@ All of the advice in the [plain English](#plain-english) section applies. Additi
 
 Always use `frontend` regardless of the context. It's less confusing and error prone, and ensures consistency across all our documentation and portfolio of products.
 
-[writing-well]: http://writersdiet.com/?page_id=16
 [active-passive]: https://oxfordediting.com/the-active-verb-form-makes-academic-writing-more-readable/
